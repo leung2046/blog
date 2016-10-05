@@ -2,46 +2,34 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<style type="text/css">
-		div{
-			width: 220px;
-			height: 100%;
-			margin:0px auto;
-		}
-		ul{
-			margin: 0px;
-			padding: 0px;
-			list-style-type: none;
-		}
-
-		li{
-			width: 220px;
-			height: 30px;
-			line-height: 30px;
-			text-align: center;
-			border: 1px solid #ccc;
-		}
-
-
-		a{
-			display: block;
-			width: 220px;
-			height: 30px;
-			text-decoration: none;
-		}
-
-		a:hover{
-			background-color: #f5f5f5;
-		}
-	</style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<!--[if lt IE 9]>
+		<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+    .container{
+    	margin-top: 150px;
+    }
+    </style>
 </head>
 <body>
-	<div>
-		<ul>
-			{% for i in title_list %}
-			<li><a href="/article/{{ i[0] }}/">{{ i[1] }}</a></li>
-			{% endfor %}
-		</ul>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<ul class="list-group">
+					{% for i in title_list %}
+					<li class="list-group-item"><a href="/article/{{ i[0] }}/">{{ i[1] }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
 	</div>
+
+	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
 </body>
 </html>

@@ -1,13 +1,10 @@
-# haha
-- firt
-- sec
+# Cooler‘s blog system
+- Flask based
+- Python (graceful)
+- FunctionLess
 
-## xiaobiaoti
+# Version Tips
+- 0.1 Alpha
+- powerfully helped by Jecvay (https://jecvay.com)
 
-### xioxiaobiaoti
-
-1. dsssss
-2. dafsda
-2. dasdsa
-21. fdsakljl
 

@@ -2,19 +2,40 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/static/wangEditor/dist/css/wangEditor.min.css">
 	<style type="text/css">
 	textarea{
 		width: 300px;
 		height: 100px;
 	}
 	</style>
+
 </head>
 <body>
-	<form action="/publish_article" method="post">
-	标题：<input name='title' type="text"></br>
-	正文：<textarea name='content'></textarea></br>
-	<input type="submit">
+	<input type="text" class="title_input">
+	<div id="div1">
+        <p>请输入内容...</p>
+    </div>
+    <button id="btn1">获取内容</button>
 
-	</form>
+	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/wangEditor/dist/js/wangEditor.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var editor = new wangEditor('div1');
+            editor.create();
+        	
+        	 $('#btn1').click(function () {
+        	// 获取标题
+        	var title_text = $('.title_input').val();
+	        
+	        // 获取编辑器区域完整html代码
+	        var html = editor.$txt.html();
+	        $.post("/publish_article", {title:title_text, content:html}, function(data) { console.log(data); })
+	    	});
+
+        });  
+
+    </script>
 </body>
 </html>
