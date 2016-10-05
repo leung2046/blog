@@ -1,0 +1,19 @@
+<!DCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		var time = {{ time }};
+		var date = new Date(time * 1000);
+		$('#time').text(date);
+	});
+	</script>
+</head>
+<body>
+	<p>{{ title }}</p>
+	<p id='time'></p>
+	<p>{{ content }}</p>
+</body>
+</html>
