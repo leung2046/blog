@@ -39,6 +39,7 @@ def publish_article(article_id):
 		)
 		c.execute('insert into art(title, content, time) values(?, ?, ?)', save_tuple)
 		conn.commit()
+		return "发布成功"
 	else:
 		conn = sqlite3.connect('database.db')
 		c = conn.cursor()
@@ -48,9 +49,9 @@ def publish_article(article_id):
 			request.form['content'], 
 			time.time()
 		)
-		c.execute('insert into art(title, content, time) values(?, ?, ?)', save_tuple)
+		c.execute('update art set(title, content, time) values(?, ?, ?) where id=%s'% article_id, save_tuple)
 		conn.commit()
-		
+		return "修改成功"
 
 @app.route('/article/<article_id>/')
 def show_article(article_id):
