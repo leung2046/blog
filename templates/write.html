@@ -12,11 +12,12 @@
 
 </head>
 <body>
-	<input type="text" class="title_input">
+	<input type="text" class="title_input" value="{{ title }}">
 	<div id="div1">
-        <p>请输入内容...</p>
+        <p>{{ content }}</p>
     </div>
-    <button id="btn1">获取内容</button>
+    <button id="btn1">发布</button>
+
 
 	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript" src="/static/wangEditor/dist/js/wangEditor.min.js"></script>
@@ -31,7 +32,7 @@
 	        
 	        // 获取编辑器区域完整html代码
 	        var html = editor.$txt.html();
-	        $.post("/publish_article", {title:title_text, content:html}, function(data) { console.log(data); })
+	        $.post("/publish_article/0", {title:title_text, content:html}, function(data) { console.log(data); })
 	    	});
 
         });  

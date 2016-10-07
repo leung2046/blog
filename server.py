@@ -25,20 +25,32 @@ def show_index():
 def write_article():
 	return render_template('write.html')
 
-@app.route('/publish_article',methods=['POST'])
-def publish_article():
-	conn = sqlite3.connect('database.db')
-	c = conn.cursor()
-	c.execute('create table if not exists art(title text, content text, time REAL, id INTEGER PRIMARY KEY autoincrement)')
-	save_tuple = (
-		request.form['title'], 
-		request.form['content'], 
-		time.time()
-	)
-	print save_tuple
-	c.execute('insert into art(title, content, time) values(?, ?, ?)', save_tuple)
-	conn.commit()
-	return 'ok'
+@app.route('/publish_article/<article_id>/',methods=['POST'])
+def publish_article(article_id):
+	print article_id
+	if article_id == 0:
+		conn = sqlite3.connect('database.db')
+		c = conn.cursor()
+		c.execute('create table if not exists art(title text, content text, time REAL, id INTEGER PRIMARY KEY autoincrement)')
+		save_tuple = (
+			request.form['title'], 
+			request.form['content'], 
+			time.time()
+		)
+		c.execute('insert into art(title, content, time) values(?, ?, ?)', save_tuple)
+		conn.commit()
+	else:
+		conn = sqlite3.connect('database.db')
+		c = conn.cursor()
+		c.execute('create table if not exists art(title text, content text, time REAL, id INTEGER PRIMARY KEY autoincrement)')
+		save_tuple = (
+			request.form['title'], 
+			request.form['content'], 
+			time.time()
+		)
+		c.execute('insert into art(title, content, time) values(?, ?, ?)', save_tuple)
+		conn.commit()
+		
 
 @app.route('/article/<article_id>/')
 def show_article(article_id):
@@ -47,6 +59,14 @@ def show_article(article_id):
 	c.execute('select title, time, content from art where id=%s' % article_id)
 	article_data = c.fetchone()
 	return render_template('article.html', title=article_data[0], time=article_data[1], content=article_data[2])
+
+@app.route('/admin/<article_id>/')
+def update_article(article_id):
+	conn = sqlite3.connect('database.db')
+	c = conn.cursor()
+	c.execute('select title, time, content from art where id=%s' % article_id)
+	article_data = c.fetchone()
+	return render_template('write.html', title=article_data[0], content=article_data[2])
 
 app.run()
 
