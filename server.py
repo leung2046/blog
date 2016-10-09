@@ -21,9 +21,6 @@ def show_index():
 	print title_list
 	return render_template('index.html', title_list = title_list)
 
-@app.route('/admin')
-def write_article():
-	return render_template('write.html')
 
 @app.route('/publish_article/<article_id>/',methods=['POST'])
 def publish_article(article_id):
@@ -63,11 +60,15 @@ def show_article(article_id):
 
 @app.route('/admin/<article_id>/')
 def update_article(article_id):
-	conn = sqlite3.connect('database.db')
-	c = conn.cursor()
-	c.execute('select title, time, content from art where id=%s' % article_id)
-	article_data = c.fetchone()
-	return render_template('write.html', title=article_data[0], content=article_data[2])
+	if article_id == "0":
+		return render_template('write.html')
+	else:
+		conn = sqlite3.connect('database.db')
+		c = conn.cursor()
+		c.execute('select title, time, content from art where id=%s' % article_id)
+		article_data = c.fetchone()
+		return render_template('write.html', title=article_data[0], content=article_data[2])
 
-app.run()
+
+app.run(debug=True)
 
