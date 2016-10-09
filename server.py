@@ -25,7 +25,7 @@ def show_index():
 @app.route('/publish_article/<article_id>/',methods=['POST'])
 def publish_article(article_id):
 	print article_id
-	if article_id == 0:
+	if article_id == "0":
 		conn = sqlite3.connect('database.db')
 		c = conn.cursor()
 		c.execute('create table if not exists art(title text, content text, time REAL, id INTEGER PRIMARY KEY autoincrement)')
@@ -44,9 +44,10 @@ def publish_article(article_id):
 		save_tuple = (
 			request.form['title'], 
 			request.form['content'], 
-			time.time()
+			time.time(),
+			article_id
 		)
-		c.execute('update art set(title, content, time) values(?, ?, ?) where id=%s'% article_id, save_tuple)
+		c.execute('update art set title="%s", content="%s", time="%s" where id="%s"' % save_tuple)
 		conn.commit()
 		return "修改成功"
 
@@ -60,15 +61,15 @@ def show_article(article_id):
 
 @app.route('/admin/<article_id>/')
 def update_article(article_id):
-	if article_id == "0":
-		return render_template('write.html')
+	if not article_id or article_id == "0":
+		return render_template('write.html', article_id=article_id)
 	else:
 		conn = sqlite3.connect('database.db')
 		c = conn.cursor()
 		c.execute('select title, time, content from art where id=%s' % article_id)
 		article_data = c.fetchone()
-		return render_template('write.html', title=article_data[0], content=article_data[2])
+		return render_template('write.html', title=article_data[0], content=article_data[2], article_id=article_id)
 
 
-app.run(debug=True)
+app.run()
 

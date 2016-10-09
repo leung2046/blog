@@ -14,7 +14,7 @@
 <body>
 	<input type="text" class="title_input" value="{{ title }}">
 	<div id="div1">
-        <p>{{ content }}</p>
+        <p>{{ content|safe }}</p>
     </div>
     <button id="btn1">发布</button>
 
@@ -32,7 +32,8 @@
 	        
 	        // 获取编辑器区域完整html代码
 	        var html = editor.$txt.html();
-	        $.post("/publish_article/0", {title:title_text, content:html}, function(data) { console.log(data); })
+	        
+	        $.post("/publish_article/{{ article_id }}/", {title:title_text, content:html}, function(data) { console.log(data); })
 	    	});
 
         });  
